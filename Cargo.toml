@@ -1,0 +1,9 @@
+[workspace]
+resolver = "3"
+
+members = [
+    "flux_core",
+    "flux_editor",
+    "flux_launcher",
+    "flux_test"
+]
