@@ -2,7 +2,7 @@
 resolver = "3"
 
 members = [
-    "flux_core",
+    "lib/flux_core",
     "flux_editor",
     "flux_launcher",
     "flux_test"
