@@ -1,6 +1,6 @@
-use num::{Num, ToPrimitive};
+use super::scalar::Scalar;
 
-pub trait VectorSpace<T: Num + ToPrimitive + Copy>
+pub trait VectorSpace<T: Scalar>
 where
     Self: Sized,
 {

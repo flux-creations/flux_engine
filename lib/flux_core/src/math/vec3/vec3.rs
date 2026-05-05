@@ -1,20 +1,20 @@
+use super::scalar::Scalar;
 use super::vector::VectorSpace;
-use num::{Num, ToPrimitive};
 
 #[derive(Debug, Copy, Clone)]
-pub struct Vec3<T: Num + ToPrimitive + Copy> {
+pub struct Vec3<T: Scalar> {
     x: T,
     y: T,
     z: T,
 }
 
-impl<T: Num + ToPrimitive + Copy> Vec3<T> {
+impl<T: Scalar> Vec3<T> {
     pub fn new(x: T, y: T, z: T) -> Vec3<T> {
         Vec3 { x, y, z }
     }
 }
 
-impl<T: Num + ToPrimitive + Copy> VectorSpace<T> for Vec3<T> {
+impl<T: Scalar> VectorSpace<T> for Vec3<T> {
     type CrossOutput = Vec3<T>;
     type CastType = T;
 
