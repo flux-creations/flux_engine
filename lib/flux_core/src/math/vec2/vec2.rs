@@ -1,44 +1,11 @@
+use super::vec3::Vec3;
+use super::vector::VectorSpace;
 use num::{Num, ToPrimitive};
-
-pub trait VectorSpace<T: Num + ToPrimitive + Copy>
-where
-    Self: Sized,
-{
-    type CrossOutput; // Associated type i implement this for each struct impl
-
-    fn zero() -> Self;
-    fn one() -> Self;
-    fn up() -> Self;
-    fn right() -> Self;
-
-    fn parse(self) -> Option<Self>;
-
-    fn magnitude(self) -> f64;
-
-    fn invert(self) -> Self;
-
-    fn add(self, other: Self) -> Self;
-    fn dot(self, other: Self) -> T;
-    fn cross(self, other: Self) -> Self::CrossOutput;
-}
 
 #[derive(Debug, Copy, Clone)]
 pub struct Vec2<T: Num + ToPrimitive + Copy> {
     x: T,
     y: T,
-}
-
-#[derive(Debug, Copy, Clone)]
-pub struct Vec3<T: Num + ToPrimitive + Copy> {
-    x: T,
-    y: T,
-    z: T,
-}
-
-impl<T: Num + ToPrimitive + Copy> Vec3<T> {
-    pub fn new(x: T, y: T, z: T) -> Vec3<T> {
-        Vec3 { x, y, z }
-    }
 }
 
 impl<T: Num + ToPrimitive + Copy> Vec2<T> {
@@ -47,63 +14,12 @@ impl<T: Num + ToPrimitive + Copy> Vec2<T> {
     }
 }
 
-impl<T: Num + ToPrimitive + Copy> VectorSpace<T> for Vec3<T> {
-    type CrossOutput = Vec3<T>;
-
-    fn zero() -> Self {
-        unimplemented!()
-    }
-
-    fn one() -> Self {
-        unimplemented!()
-    }
-
-    fn up() -> Self {
-        unimplemented!()
-    }
-
-    fn right() -> Self {
-        unimplemented!()
-    }
-
-    fn parse(self) -> Option<Self> {
-        _ = self.x + self.y + self.z;
-        unimplemented!()
-    }
-
-    fn magnitude(self) -> f64 {
-        unimplemented!()
-    }
-
-    fn invert(self) -> Self {
-        unimplemented!()
-    }
-
-    fn add(self, other: Self) -> Self {
-        _ = other;
-        unimplemented!()
-    }
-
-    fn dot(self, other: Self) -> T {
-        _ = other;
-        unimplemented!()
-    }
-
-    fn cross(self, other: Self) -> Self {
-        _ = other;
-        unimplemented!()
-    }
-}
-
 impl<T: Num + ToPrimitive + Copy> VectorSpace<T> for Vec2<T> {
     type CrossOutput = Vec3<T>;
+    type CastType = T;
 
-    fn magnitude(self) -> f64 {
-        f64::sqrt(
-            (self.x * self.x + self.y * self.y)
-                .to_f64()
-                .expect("The conversion to f64 was not possible!"),
-        )
+    fn magnitude(self) -> T {
+        f64::sqrt((self.x * self.x + self.y * self.y).to_f64()).to_T()
     }
 
     fn zero() -> Vec2<T> {
@@ -123,12 +39,13 @@ impl<T: Num + ToPrimitive + Copy> VectorSpace<T> for Vec2<T> {
     }
 
     // TODO: Find a way to seamlessly parse between number over Num trait
-    fn parse(self: Vec2<T>) -> Option<Vec2<T>> {
+    fn parse(self: Vec2<T>) -> Option<T> {
         unimplemented!()
     }
 
     //TODO: Not all Num trait types are having simple way to invert find best solution
     fn invert(self: Vec2<T>) -> Vec2<T> {
+        // Vec2::new(self.x * (-1 as Self::CastType), self.y * (-1))
         unimplemented!()
     }
 
