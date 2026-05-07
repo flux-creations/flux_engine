@@ -15,8 +15,10 @@ pub trait Scalar:
     fn one() -> Self;
     fn sqrt(self) -> Self;
     fn from_f64(v: f64) -> Self;
-    fn cast<U: Scalar>(self) -> U;
     fn to_f64(self) -> f64;
+    fn cast<U: Scalar>(self) -> U {
+        Scalar::from_f64(self.to_f64())
+    }
 }
 
 macro_rules! impl_scalar {
@@ -34,21 +36,13 @@ macro_rules! impl_scalar {
                 (self as f64).sqrt() as $t
             }
 
-            // TODO: Make universal cast mathod over the Scalar types
-
-            fn cast<U: Scalar>(self) -> U {
-
-
-            }
-
             #[inline(always)]
             fn from_f64(v: f64) -> Self {
                 (v + 0.5) as $t
             }
 
             #[inline(always)]
-            fn t:w
-                o_f64(self) -> f64 {
+            fn to_f64(self) -> f64 {
                 self as f64
             }
         }
